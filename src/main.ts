@@ -1,13 +1,14 @@
-import { ConfigService } from '@nestjs/config';
-import { NestApplication, NestFactory, Reflector } from '@nestjs/core';
-import { AppModule } from 'src/modules/app.module';
-import { NodeEnvEnum } from 'src/common/enums';
-import { handleLocalEnvironment } from 'src/common/utils';
 import {
   ClassSerializerInterceptor,
   ValidationPipe,
   VersioningType,
 } from '@nestjs/common';
+import { NestApplication, NestFactory, Reflector } from '@nestjs/core';
+import { ConfigService } from '@nestjs/config';
+import { setupSwagger } from 'src/common/config';
+import { NodeEnvEnum } from 'src/common/enums';
+import { handleLocalEnvironment } from 'src/common/utils';
+import { AppModule } from 'src/modules/app.module';
 
 async function bootstrap() {
   const app: NestApplication = await NestFactory.create(AppModule, {
@@ -41,12 +42,19 @@ async function bootstrap() {
     }),
   );
 
+  if (appEnvironment !== NodeEnvEnum.PRODUCTION) {
+    setupSwagger(app);
+  }
+
   if (appEnvironment === NodeEnvEnum.LOCAL) {
     await handleLocalEnvironment(app, basePort);
   } else {
     await app.listen(basePort);
     console.log(
-      `Application is running on port: ${basePort} in ${environment} environment`,
+      `Application is running on port: http://localhost:${basePort} in ${environment} environment`,
+    );
+    console.log(
+      `Swagger documentation: http://localhost:${basePort}/${process.env.SWAGGER_PATH || 'api/docs'}`,
     );
   }
 }
