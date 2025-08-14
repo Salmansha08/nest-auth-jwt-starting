@@ -3,7 +3,11 @@ import { NestApplication, NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from 'src/modules/app.module';
 import { NodeEnvEnum } from 'src/common/enums';
 import { handleLocalEnvironment } from 'src/common/utils';
-import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
+import {
+  ClassSerializerInterceptor,
+  ValidationPipe,
+  VersioningType,
+} from '@nestjs/common';
 
 async function bootstrap() {
   const app: NestApplication = await NestFactory.create(AppModule, {
@@ -21,7 +25,16 @@ async function bootstrap() {
     : NodeEnvEnum.LOCAL;
 
   app.setGlobalPrefix('api');
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  app.enableVersioning({
+    type: VersioningType.URI,
+    prefix: 'v',
+  });
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+    }),
+  );
   app.useGlobalInterceptors(
     new ClassSerializerInterceptor(app.get(Reflector), {
       excludeExtraneousValues: true,
