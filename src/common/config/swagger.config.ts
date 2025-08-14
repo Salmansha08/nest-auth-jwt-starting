@@ -10,7 +10,6 @@ export const setupSwagger = (app: INestApplication): void => {
     .setDescription('API description')
     .setVersion('1.0')
     .addBearerAuth()
-    .addTag('auth')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

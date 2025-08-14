@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import databaseConfig from 'src/common/config/database.config';
+import { appConfig, databaseConfig } from 'src/common/config';
 import { HealthModule } from 'src/modules/health/health.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [databaseConfig],
+      load: [appConfig, databaseConfig],
       envFilePath: ['.env.local', '.env'],
     }),
     HealthModule,

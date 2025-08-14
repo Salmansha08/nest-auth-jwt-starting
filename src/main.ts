@@ -17,15 +17,16 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
   const basePort = configService.get<number>('PORT') ?? 3000;
-
   const environment = configService.get<string>('NODE_ENV') || 'local';
+  const apiPrefix = configService.get<string>('API_PREFIX') || 'api';
+
   const appEnvironment = Object.values(NodeEnvEnum).includes(
     environment as NodeEnvEnum,
   )
     ? (environment as NodeEnvEnum)
     : NodeEnvEnum.LOCAL;
 
-  app.setGlobalPrefix('api');
+  app.setGlobalPrefix(apiPrefix);
   app.enableVersioning({
     type: VersioningType.URI,
     prefix: 'v',
