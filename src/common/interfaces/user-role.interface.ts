@@ -2,7 +2,8 @@ import { RoleEnum } from 'src/common/enums';
 
 export interface RequestWithUser {
   user?: {
-    id?: string | number;
+    id?: string;
+    email?: string;
     role?: RoleEnum;
     roles?: RoleEnum[];
   };
