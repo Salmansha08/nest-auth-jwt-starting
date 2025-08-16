@@ -23,6 +23,7 @@ import {
 } from 'src/modules/user/interfaces';
 import { UserPresenter } from 'src/modules/user/presenter';
 import { plainToInstance } from 'class-transformer';
+import { RoleEnum } from 'src/common/enums';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -152,7 +153,13 @@ export class UserService implements IUserService {
   }
 
   async create(createUserDto: CreateUserDto): Promise<UserPresenter> {
-    const { email, password } = createUserDto;
+    const { email, role, password } = createUserDto;
+
+    if (role === RoleEnum.SUPERADMIN) {
+      throw new BadRequestException(
+        `Can't Create User with role ${RoleEnum.SUPERADMIN}`,
+      );
+    }
 
     const user = await this.findOneByEmail(email);
     if (user) {
