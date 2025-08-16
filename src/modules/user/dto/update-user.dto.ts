@@ -9,7 +9,10 @@ import {
 } from 'class-validator';
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    description: 'The New password of the user',
+    example: 'Anon123!',
+  })
   @IsString()
   @MinLength(8)
   @MaxLength(24)

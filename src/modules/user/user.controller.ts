@@ -10,13 +10,11 @@ import {
   HttpStatus,
   Query,
   ParseUUIDPipe,
-  UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { BaseController } from 'src/common/base';
-import { ApiDoc, Roles } from 'src/common/decorators';
-import { ResponseEnum, RoleEnum } from 'src/common/enums';
-import { JwtAuthGuard, RolesGuard } from 'src/common/guards';
+import { ApiDoc } from 'src/common/decorators';
+import { ResponseEnum } from 'src/common/enums';
 import {
   CreateUserDto,
   UpdateUserDto,
@@ -27,8 +25,8 @@ import { UserPresenter } from 'src/modules/user/presenter';
 
 @Controller('user')
 @ApiTags('User')
-@ApiBearerAuth()
-@UseGuards(JwtAuthGuard)
+// @ApiBearerAuth()
+// @UseGuards(JwtAuthGuard)
 export class UserController extends BaseController {
   constructor(
     @Inject(UserServiceToken)
@@ -38,8 +36,8 @@ export class UserController extends BaseController {
   }
 
   @Post()
-  @UseGuards(RolesGuard)
-  @Roles(RoleEnum.ADMIN, RoleEnum.SUPERADMIN)
+  // @UseGuards(RolesGuard)
+  // @Roles(RoleEnum.ADMIN, RoleEnum.SUPERADMIN)
   @ApiDoc(
     {
       summary: 'Create User',
@@ -57,8 +55,8 @@ export class UserController extends BaseController {
   }
 
   @Get()
-  @UseGuards(RolesGuard)
-  @Roles(RoleEnum.ADMIN, RoleEnum.SUPERADMIN)
+  // @UseGuards(RolesGuard)
+  // @Roles(RoleEnum.ADMIN, RoleEnum.SUPERADMIN)
   @ApiDoc(
     {
       summary: 'Get all users',
@@ -85,7 +83,7 @@ export class UserController extends BaseController {
   }
 
   @Get(':id')
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @ApiDoc(
     {
       summary: 'Find User',
@@ -103,8 +101,8 @@ export class UserController extends BaseController {
   }
 
   @Patch(':id')
-  @UseGuards(RolesGuard)
-  @Roles(RoleEnum.ADMIN, RoleEnum.SUPERADMIN)
+  // @UseGuards(RolesGuard)
+  // @Roles(RoleEnum.ADMIN, RoleEnum.SUPERADMIN)
   @ApiDoc(
     {
       summary: 'Update User',
@@ -125,8 +123,8 @@ export class UserController extends BaseController {
   }
 
   @Delete(':id')
-  @UseGuards(RolesGuard)
-  @Roles(RoleEnum.ADMIN, RoleEnum.SUPERADMIN)
+  // @UseGuards(RolesGuard)
+  // @Roles(RoleEnum.ADMIN, RoleEnum.SUPERADMIN)
   @ApiDoc({
     summary: 'Delete User',
     description: 'Delete User',

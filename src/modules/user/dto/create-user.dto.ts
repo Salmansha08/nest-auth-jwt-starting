@@ -11,17 +11,26 @@ import {
 import { RoleEnum } from 'src/common/enums';
 
 export class CreateUserDto {
-  @ApiProperty()
+  @ApiProperty({
+    description: 'The name of the user',
+    example: 'Anonymous',
+  })
   @IsNotEmpty()
   @IsString()
   name: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: 'The email of the user',
+    example: 'anonymous@email.com',
+  })
   @IsNotEmpty()
   @IsEmail()
   email: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: 'The password of the user',
+    example: 'Anon123!',
+  })
   @IsNotEmpty()
   @IsString()
   @MinLength(8)
@@ -32,7 +41,10 @@ export class CreateUserDto {
   })
   password: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: 'The role of the user',
+    example: RoleEnum.USER,
+  })
   @IsNotEmpty()
   @IsEnum(RoleEnum)
   role: RoleEnum;
