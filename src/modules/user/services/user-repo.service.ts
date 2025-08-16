@@ -81,9 +81,20 @@ export class UserRepo implements IUserRepo {
   }
 
   async findOneByEmail(email: string): Promise<User | null> {
-    const user = await this.userRepository.findOneBy({
-      email,
-    });
+    const queryBuilder = this.userRepository
+      .createQueryBuilder('user')
+      .where('user.email = :email', { email })
+      .andWhere('user.deletedAt IS NULL');
+
+    queryBuilder.addSelect([
+      'user.password',
+      'user.email',
+      'user.role',
+      'user.name',
+    ]);
+
+    const user = await queryBuilder.getOne();
+
     return user;
   }
 }

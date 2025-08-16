@@ -4,7 +4,7 @@ import { IsBoolean, IsEmail, IsNotEmpty, IsString } from 'class-validator';
 export class LoginDto {
   @ApiProperty({
     description: 'The email of the user',
-    example: 'user@example.com',
+    example: 'user@email.com',
   })
   @IsNotEmpty()
   @IsEmail()

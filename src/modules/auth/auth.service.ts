@@ -19,12 +19,10 @@ import {
 } from '../user/interfaces';
 import { UserPresenter } from '../user/presenter';
 import { LoginPresenter } from './presenter';
+import { RoleEnum } from 'src/common/enums';
+import { CreateUserDto } from '../user/dto';
+import { JwtPayload } from 'src/common/interfaces';
 
-interface Payload {
-  sub: string;
-  email: string;
-  role: string;
-}
 @Injectable()
 export class AuthService implements IAuthService {
   private readonly logger = new Logger(AuthService.name);
@@ -53,7 +51,7 @@ export class AuthService implements IAuthService {
   }
 
   private async generateAccessToken(
-    payload: Payload,
+    payload: JwtPayload,
     expiresIn: string,
   ): Promise<string> {
     return this.jwtService.signAsync(payload, {
@@ -63,32 +61,51 @@ export class AuthService implements IAuthService {
   }
 
   async register(registerDto: RegisterDto): Promise<UserPresenter> {
-    try {
-      const user = await this.userService.create(registerDto);
+    const { password, confirmPassword } = registerDto;
 
-      return user;
-    } catch (error) {
-      this.logger.error('Error registering user', error);
-      throw new BadRequestException('Registration failed');
+    if (password !== confirmPassword) {
+      this.logger.error('Password and confirm password do not match');
+      throw new BadRequestException(
+        'Password and confirm password do not match',
+      );
     }
+
+    const userRegisterDto: CreateUserDto = {
+      ...registerDto,
+      role: RoleEnum.USER,
+    };
+
+    const user = await this.userService.create(userRegisterDto);
+
+    return user;
   }
 
   async login(loginDto: LoginDto): Promise<LoginPresenter> {
     const user = await this.userRepo.findOneByEmail(loginDto.email);
     if (!user) {
-      this.logger.warn(
+      this.logger.error(
         `Login attempt with non-existent email: ${loginDto.email}`,
       );
       throw new UnauthorizedException(`Invalid email or password`);
     }
 
+    if (!user.password || !user.email || !user.role) {
+      this.logger.warn(`Incomplete user data for login: ${loginDto.email}`);
+      throw new UnauthorizedException(`Invalid email or password`);
+    }
+
     const isMatch = await bcrypt.compare(loginDto.password, user.password);
     if (!isMatch) {
-      this.logger.warn(`Failed login attempt for user: ${user.email}`);
+      this.logger.error(`Failed login attempt for user: ${user.email}`);
       throw new UnauthorizedException(`Invalid email or password`);
     }
 
     const payload = this.createJwtPayload(user);
+    if (!payload.sub || !payload.email || !payload.role) {
+      this.logger.error('Invalid token payload', payload);
+      throw new UnauthorizedException('Invalid token payload');
+    }
+
     const expiresIn = loginDto.rememberMe ? this.expiresIn : '1d';
     const accessToken = await this.generateAccessToken(payload, expiresIn);
 

@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, OmitType } from '@nestjs/swagger';
 import {
   IsNotEmpty,
   IsString,
@@ -8,7 +8,7 @@ import {
 } from 'class-validator';
 import { CreateUserDto } from 'src/modules/user/dto';
 
-export class RegisterDto extends CreateUserDto {
+export class RegisterDto extends OmitType(CreateUserDto, ['role']) {
   @ApiProperty({
     description: 'The password of the user',
     example: 'Password123!',

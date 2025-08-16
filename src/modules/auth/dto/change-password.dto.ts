@@ -10,14 +10,14 @@ import {
 export class ChangePasswordDto {
   @ApiProperty({
     description: 'The current password of the user',
-    example: 'Anon123!',
+    example: 'Password123!',
   })
   @IsNotEmpty()
   oldPassword: string;
 
   @ApiProperty({
     description: 'The new password of the user',
-    example: 'NewAnon123!',
+    example: 'NewPassword123!',
   })
   @IsNotEmpty()
   @IsString()

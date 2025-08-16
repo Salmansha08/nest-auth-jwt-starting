@@ -10,12 +10,11 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { BaseController } from 'src/common/base';
-import { ApiDoc, Roles } from 'src/common/decorators';
-import { ResponseEnum, RoleEnum } from 'src/common/enums';
-import { JwtAuthGuard, RolesGuard } from 'src/common/guards';
+import { ApiDoc } from 'src/common/decorators';
+import { ResponseEnum } from 'src/common/enums';
+import { JwtAuthGuard } from 'src/common/guards';
 import { LoginDto, RegisterDto } from './dto';
 import { AuthServiceToken, IAuthService } from './interfaces';
-import { plainToInstance } from 'class-transformer';
 import { ThrottlerGuard } from '@nestjs/throttler';
 import { LoginPresenter } from './presenter';
 import { UserPresenter } from '../user/presenter';
@@ -44,20 +43,17 @@ export class AuthController extends BaseController {
   )
   async login(@Body() loginDto: LoginDto) {
     const data = await this._authService.login(loginDto);
-    return {
-      message: 'Login successful',
-      data: plainToInstance(LoginPresenter, data),
-    };
+    const transformedData = this.transformObject(LoginPresenter, data);
+
+    return this.findSuccess(transformedData, 'User logged in successfully');
   }
 
   @Post('register')
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(RoleEnum.ADMIN)
+  @UseGuards(ThrottlerGuard)
   @ApiDoc(
     {
-      summary: 'Register User',
-      description: 'Register new user',
+      summary: 'Register User (only for role USER)',
+      description: 'Register new user (only for role USER)',
       status: HttpStatus.CREATED,
       responseType: ResponseEnum.OBJECT,
     },
@@ -65,10 +61,9 @@ export class AuthController extends BaseController {
   )
   async register(@Body() registerDto: RegisterDto) {
     const data = await this._authService.register(registerDto);
-    return {
-      message: 'Registration successful',
-      data: plainToInstance(UserPresenter, data),
-    };
+    const transformedData = this.transformObject(UserPresenter, data);
+
+    return this.findSuccess(transformedData, 'User registered successfully');
   }
 
   @Get('me')
@@ -84,10 +79,15 @@ export class AuthController extends BaseController {
     UserPresenter,
   )
   getCurrentUser(@Req() req: RequestWithUser) {
-    const data = req.user;
-    return {
-      message: 'Current user fetched successfully',
-      data: plainToInstance(UserPresenter, data),
-    };
+    if (!req.user) {
+      return this.unauthorized('User not found');
+    }
+
+    const transformedData = this.transformObject(UserPresenter, req.user);
+
+    return this.findSuccess(
+      transformedData,
+      'Current user fetched successfully',
+    );
   }
 }
