@@ -19,7 +19,14 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prepare": "husky",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "typeorm": "bunxx typeorm-ts-node-commonjs ",
+    "typeorm:create-migration": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:create",
+    "typeorm:run-migration": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js -d ./src/common/config/orm.config migration:run",
+    "typeorm:run-migration-prod": "node ./node_modules/typeorm/cli.js -d ./dist/common/config/orm.config migration:run",
+    "typeorm:revert-migration": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js -d ./src/common/config/orm.config migration:revert",
+    "typeorm:generate-migration": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js -d ./src/common/config/orm.config migration:generate",
+    "typeorm:connection": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js -d ./src/common/config/orm.config connection:show"
   },
   "dependencies": {
     "@nestjs/axios": "^4.0.1",
@@ -31,6 +38,7 @@
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/swagger": "^11.2.0",
     "@nestjs/terminus": "^11.0.0",
+    "@nestjs/throttler": "^6.4.0",
     "@nestjs/typeorm": "^11.0.0",
     "bcrypt": "^6.0.0",
     "cache-manager": "^7.1.1",

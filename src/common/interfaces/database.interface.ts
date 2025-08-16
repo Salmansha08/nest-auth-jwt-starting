@@ -6,5 +6,8 @@ export interface DatabaseConfig {
   database: string;
   schema: string;
   logging: boolean;
+  entities: string[];
+  autoLoadEntities: boolean;
+  migrations: string[];
   synchronize: boolean;
 }

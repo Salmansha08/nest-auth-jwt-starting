@@ -11,7 +11,7 @@ class EnvironmentVariables {
   PORT: number;
 
   @IsString()
-  SECRET_KEY!: string;
+  JWT_SECRET!: string;
 
   @IsString()
   APP_NAME: string;
@@ -30,7 +30,7 @@ class EnvironmentVariables {
   DATABASE_PASSWORD: string;
 
   @IsString()
-  DATABASE_DB: string;
+  DATABASE_NAME: string;
 }
 
 export function validateEnvironment(config: Record<string, unknown>) {
