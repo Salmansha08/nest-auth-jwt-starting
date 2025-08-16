@@ -23,17 +23,22 @@
   },
   "dependencies": {
     "@nestjs/axios": "^4.0.1",
+    "@nestjs/cache-manager": "^3.0.1",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.1",
+    "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/swagger": "^11.2.0",
     "@nestjs/terminus": "^11.0.0",
     "@nestjs/typeorm": "^11.0.0",
+    "bcrypt": "^6.0.0",
+    "cache-manager": "^7.1.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.5",
+    "passport": "^0.7.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "swagger-themes": "^1.4.3",
@@ -47,6 +52,7 @@
     "@nestjs/testing": "^11.0.1",
     "@swc/cli": "^0.6.0",
     "@swc/core": "^1.10.7",
+    "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.7",
@@ -91,6 +97,7 @@
   "trustedDependencies": [
     "@nestjs/core",
     "@scarf/scarf",
-    "@swc/core"
+    "@swc/core",
+    "bcrypt"
   ]
 }
