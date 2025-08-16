@@ -12,6 +12,7 @@ import {
 import { DatabaseConfig } from 'src/common/interfaces';
 import { HealthModule } from 'src/modules/health/health.module';
 import { UsersModule } from 'src/modules/user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { UsersModule } from 'src/modules/user/user.module';
     }),
     HealthModule,
     UsersModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [
