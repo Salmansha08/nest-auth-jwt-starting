@@ -5,12 +5,16 @@ import {
 } from '@nestjs/common';
 import { NestApplication, NestFactory, Reflector } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
+import { Server } from 'http';
 import { AppModule } from './modules/app.module';
 import { NodeEnvEnum } from './common/enums';
 import { setupSwagger } from './common/config';
 import { handleLocalEnvironment } from './common/utils';
+import { Request, Response } from 'express';
 
-async function bootstrap() {
+let server: Server;
+
+async function bootstrap(): Promise<Server | void> {
   const app: NestApplication = await NestFactory.create(AppModule, {
     cors: true,
   });
@@ -19,6 +23,7 @@ async function bootstrap() {
   const basePort = configService.get<number>('PORT') ?? 3000;
   const environment = configService.get<string>('NODE_ENV') || 'local';
   const apiPrefix = configService.get<string>('API_PREFIX') || 'api';
+  const isVercel = configService.get<string>('VERCEL') === 'false';
 
   const appEnvironment = Object.values(NodeEnvEnum).includes(
     environment as NodeEnvEnum,
@@ -45,6 +50,11 @@ async function bootstrap() {
 
   setupSwagger(app);
 
+  if (isVercel) {
+    await app.init();
+    return app.getHttpAdapter().getInstance();
+  }
+
   if (appEnvironment === NodeEnvEnum.LOCAL) {
     await handleLocalEnvironment(app, basePort);
   } else {
@@ -62,4 +72,17 @@ bootstrap().catch((err) => {
   process.exit(1);
 });
 
-export default bootstrap;
+export default async function handler(
+  req: Request,
+  res: Response,
+): Promise<void> {
+  if (!server) {
+    const instance = (await bootstrap()) as Server;
+    if (instance) {
+      server = instance;
+    }
+  }
+  if (server) {
+    server.emit('request', req, res);
+  }
+}
