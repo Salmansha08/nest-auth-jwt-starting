@@ -5,10 +5,10 @@ import {
 } from '@nestjs/common';
 import { NestApplication, NestFactory, Reflector } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
-import { setupSwagger } from 'src/common/config';
-import { NodeEnvEnum } from 'src/common/enums';
-import { handleLocalEnvironment } from 'src/common/utils';
-import { AppModule } from 'src/modules/app.module';
+import { setupSwagger } from './common/config';
+import { NodeEnvEnum } from './common/enums';
+import { handleLocalEnvironment } from './common/utils';
+import { AppModule } from './modules/app.module';
 
 async function bootstrap() {
   const app: NestApplication = await NestFactory.create(AppModule, {

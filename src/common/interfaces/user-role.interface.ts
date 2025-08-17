@@ -1,4 +1,4 @@
-import { RoleEnum } from 'src/common/enums';
+import { RoleEnum } from '../enums';
 
 export interface RequestWithUser {
   user?: {

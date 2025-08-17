@@ -1,6 +1,6 @@
 import { plainToClass, Transform } from 'class-transformer';
 import { IsEnum, IsNumber, IsString, validateSync } from 'class-validator';
-import { NodeEnvEnum } from 'src/common/enums';
+import { NodeEnvEnum } from '../enums';
 
 class EnvironmentVariables {
   @IsEnum(NodeEnvEnum)

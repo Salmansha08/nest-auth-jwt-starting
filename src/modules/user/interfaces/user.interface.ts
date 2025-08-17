@@ -1,11 +1,7 @@
-import { User } from 'src/modules/user/entities';
-import {
-  CreateUserDto,
-  FilterUserDto,
-  UpdateUserDto,
-} from 'src/modules/user/dto';
-import { UserPresenter } from 'src/modules/user/presenter';
-import { PaginationPresenter } from 'src/common/base';
+import { PaginationPresenter } from '../../../common/base';
+import { User } from '../entities';
+import { CreateUserDto, FilterUserDto, UpdateUserDto } from '../dto';
+import { UserPresenter } from '../presenter';
 
 export const UserRepoToken = Symbol('UserRepoToken');
 

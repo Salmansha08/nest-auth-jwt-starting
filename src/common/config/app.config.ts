@@ -1,5 +1,5 @@
 import { registerAs } from '@nestjs/config';
-import { AppConfig } from 'src/common/interfaces';
+import { AppConfig } from '../interfaces';
 
 export const appConfig = registerAs(
   'app',

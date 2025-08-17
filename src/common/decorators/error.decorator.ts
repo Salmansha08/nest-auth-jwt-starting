@@ -1,6 +1,6 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiResponse, ApiResponseOptions } from '@nestjs/swagger';
-import { IErrorObject } from 'src/common/interfaces';
+import { IErrorObject } from '../interfaces';
 
 export function ApiErrorDecorator(
   args: IErrorObject[] | IErrorObject,

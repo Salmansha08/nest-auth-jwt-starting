@@ -9,16 +9,16 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { BaseController } from 'src/common/base';
-import { ApiDoc } from 'src/common/decorators';
-import { ResponseEnum } from 'src/common/enums';
-import { JwtAuthGuard } from 'src/common/guards';
+import { ThrottlerGuard } from '@nestjs/throttler';
+import { BaseController } from '../../common/base';
+import { ApiDoc } from '../../common/decorators';
+import { ResponseEnum } from '../../common/enums';
+import { JwtAuthGuard } from '../../common/guards';
+import { RequestWithUser } from '../../common/interfaces';
+import { UserPresenter } from '../user/presenter';
 import { LoginDto, RegisterDto } from './dto';
 import { AuthServiceToken, IAuthService } from './interfaces';
-import { ThrottlerGuard } from '@nestjs/throttler';
 import { LoginPresenter } from './presenter';
-import { UserPresenter } from '../user/presenter';
-import { RequestWithUser } from 'src/common/interfaces';
 
 @Controller('auth')
 @ApiTags('Auth')

@@ -7,10 +7,12 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { plainToInstance } from 'class-transformer';
 import * as bcrypt from 'bcrypt';
+import { RoleEnum } from '../../common/enums';
+import { JwtPayload } from '../../common/interfaces';
 import { RegisterDto, LoginDto } from './dto';
 import { IAuthService } from './interfaces';
-import { plainToInstance } from 'class-transformer';
 import {
   IUserRepo,
   IUserService,
@@ -19,9 +21,7 @@ import {
 } from '../user/interfaces';
 import { UserPresenter } from '../user/presenter';
 import { LoginPresenter } from './presenter';
-import { RoleEnum } from 'src/common/enums';
 import { CreateUserDto } from '../user/dto';
-import { JwtPayload } from 'src/common/interfaces';
 
 @Injectable()
 export class AuthService implements IAuthService {

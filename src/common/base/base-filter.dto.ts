@@ -9,7 +9,7 @@ import {
   Max,
   IsEnum,
 } from 'class-validator';
-import { SortOrderEnum } from 'src/common/enums';
+import { SortOrderEnum } from '../enums';
 
 export class BaseFilterDto {
   @ApiPropertyOptional({

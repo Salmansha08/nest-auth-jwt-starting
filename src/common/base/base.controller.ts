@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { ClassTransformOptions, plainToInstance } from 'class-transformer';
-import { MetaPresenter } from 'src/common/base';
-import { SuccessResponse } from 'src/common/interfaces';
+import { MetaPresenter } from './base.presenter';
+import { SuccessResponse } from '../interfaces';
 
 export class BaseController {
   /**

@@ -1,15 +1,8 @@
 import { Type, UseInterceptors, applyDecorators } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
-import { ResponseEnum } from 'src/common/enums';
-import {
-  ApiArrayResponse,
-  ApiObjectResponse,
-  ApiPaginationResponse,
-} from 'src/common/decorators';
-import {
-  PaginationInterceptor,
-  TransformInterceptor,
-} from 'src/common/interceptors';
+import { ResponseEnum } from '../enums';
+import { ApiArrayResponse, ApiObjectResponse, ApiPaginationResponse } from './';
+import { PaginationInterceptor, TransformInterceptor } from '../interceptors';
 
 export const ApiDoc = (
   options: {

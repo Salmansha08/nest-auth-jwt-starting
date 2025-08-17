@@ -1,4 +1,4 @@
-import { MetaPresenter } from 'src/common/base';
+import { MetaPresenter } from '../base';
 
 export interface SuccessResponse<T> {
   statusCode: number;

@@ -13,17 +13,13 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { BaseController } from 'src/common/base';
-import { ApiDoc, Roles } from 'src/common/decorators';
-import { ResponseEnum, RoleEnum } from 'src/common/enums';
-import { JwtAuthGuard, RolesGuard } from 'src/common/guards';
-import {
-  CreateUserDto,
-  UpdateUserDto,
-  FilterUserDto,
-} from 'src/modules/user/dto';
-import { IUserService, UserServiceToken } from 'src/modules/user/interfaces';
-import { UserPresenter } from 'src/modules/user/presenter';
+import { BaseController } from '../../common/base';
+import { ApiDoc, Roles } from '../../common/decorators';
+import { ResponseEnum, RoleEnum } from '../../common/enums';
+import { JwtAuthGuard, RolesGuard } from '../../common/guards';
+import { CreateUserDto, UpdateUserDto, FilterUserDto } from './dto';
+import { IUserService, UserServiceToken } from './interfaces';
+import { UserPresenter } from './presenter';
 
 @Controller('user')
 @ApiTags('User')

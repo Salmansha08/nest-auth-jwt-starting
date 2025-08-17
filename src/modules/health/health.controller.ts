@@ -10,7 +10,7 @@ import {
   DiskHealthIndicator,
 } from '@nestjs/terminus';
 import * as os from 'os';
-import { SystemInfo } from 'src/common/interfaces';
+import { SystemInfo } from '../../common/interfaces';
 
 @ApiTags('Health')
 @Controller('health')

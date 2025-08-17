@@ -9,21 +9,13 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
-import * as bcrypt from 'bcrypt';
-import { PaginationPresenter } from 'src/common/base';
-import {
-  CreateUserDto,
-  FilterUserDto,
-  UpdateUserDto,
-} from 'src/modules/user/dto';
-import {
-  IUserRepo,
-  IUserService,
-  UserRepoToken,
-} from 'src/modules/user/interfaces';
-import { UserPresenter } from 'src/modules/user/presenter';
 import { plainToInstance } from 'class-transformer';
-import { RoleEnum } from 'src/common/enums';
+import * as bcrypt from 'bcrypt';
+import { PaginationPresenter } from '../../../common/base';
+import { RoleEnum } from '../../../common/enums';
+import { CreateUserDto, FilterUserDto, UpdateUserDto } from '../dto';
+import { IUserRepo, IUserService, UserRepoToken } from '../interfaces';
+import { UserPresenter } from '../presenter';
 
 @Injectable()
 export class UserService implements IUserService {

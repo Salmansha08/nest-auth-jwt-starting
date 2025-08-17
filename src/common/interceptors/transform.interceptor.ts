@@ -7,11 +7,7 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 import { map, Observable } from 'rxjs';
-import {
-  IResponse,
-  PaginationData,
-  StandardResponse,
-} from 'src/common/interfaces';
+import { IResponse, PaginationData, StandardResponse } from '../interfaces';
 
 @Injectable()
 export class TransformInterceptor<T>
