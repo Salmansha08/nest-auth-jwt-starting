@@ -55,7 +55,7 @@ async function bootstrap(): Promise<Server | void> {
     return app.getHttpAdapter().getInstance();
   }
 
-  if (appEnvironment === NodeEnvEnum.LOCAL) {
+  if (appEnvironment === NodeEnvEnum.LOCAL || NodeEnvEnum.DEVELOPMENT) {
     await handleLocalEnvironment(app, basePort);
   } else {
     await app.listen(basePort);
