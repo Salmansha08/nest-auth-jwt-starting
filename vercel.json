@@ -19,7 +19,7 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "./main.js"
+      "destination": "src/main.ts"
     }
   ],
   "trailingSlash": false
