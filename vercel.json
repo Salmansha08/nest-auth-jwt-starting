@@ -8,8 +8,21 @@
   ],
   "routes": [
     {
-      "src": "/(.*)",
-      "dest": "/src/main.ts"
+      "src": "^/(.*)",
+      "dest": "main.js",
+      "methods": [
+        "GET",
+        "POST",
+        "DELETE",
+        "PATCH",
+        "OPTIONS"
+      ]
     }
-  ]
+  ],
+  "crons": [],
+  "framework": null,
+  "devCommand": "bun run start:dev",
+  "installCommand": "bun install",
+  "buildCommand": "bun run build",
+  "outputDirectory": "dist"
 }
