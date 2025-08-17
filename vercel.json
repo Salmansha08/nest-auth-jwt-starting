@@ -4,13 +4,6 @@
   "buildCommand": "bun run build",
   "devCommand": "bun run start:dev",
   "framework": null,
-  "functions": {
-    "src/*.ts": {
-      "runtime": "nodejs",
-      "memory": 3009,
-      "maxDuration": 60
-    }
-  },
   "installCommand": "bun install",
   "outputDirectory": "dist",
   "redirects": [
