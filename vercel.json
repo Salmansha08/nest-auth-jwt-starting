@@ -1,12 +1,5 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
-  "builds": [
-    {
-      "src": "src/main.ts",
-      "use": "@vercel/node"
-    }
-  ],
   "routes": [
     {
       "src": "/(.*)",
@@ -14,19 +7,9 @@
       "methods": [
         "GET",
         "POST",
-        "DELETE",
         "PATCH",
-        "OPTIONS"
-      ],
-      "headers": {
-        "Access-Control-Allow-Origin": "*"
-      }
+        "DELETE"
+      ]
     }
-  ],
-  "crons": [],
-  "framework": null,
-  "devCommand": "bun run start:dev",
-  "installCommand": "bun install",
-  "buildCommand": "bun run build",
-  "outputDirectory": "dist"
+  ]
 }
