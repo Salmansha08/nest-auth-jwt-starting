@@ -7,7 +7,6 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "vercel-build": "bun run build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -21,7 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prepare": "husky",
     "lint-staged": "lint-staged",
-    "typeorm": "bunxx typeorm-ts-node-commonjs ",
+    "typeorm": "bunx typeorm-ts-node-commonjs ",
     "typeorm:create-migration": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:create",
     "typeorm:run-migration": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js -d ./src/common/config/orm.config migration:run",
     "typeorm:run-migration-prod": "node ./node_modules/typeorm/cli.js -d ./dist/common/config/orm.config migration:run",
