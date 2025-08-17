@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
-import { BaseIdPresenter } from '../../../common/base';
-import { RoleEnum } from '../../../common/enums';
+import { BaseIdPresenter } from 'src/common/base';
+import { RoleEnum } from 'src/common/enums';
 
 @Exclude()
 export class UserPresenter extends BaseIdPresenter {

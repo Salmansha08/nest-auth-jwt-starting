@@ -6,7 +6,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { CreateUserDto } from '../../user/dto';
+import { CreateUserDto } from 'src/modules/user/dto';
 
 export class RegisterDto extends OmitType(CreateUserDto, ['role']) {
   @ApiProperty({

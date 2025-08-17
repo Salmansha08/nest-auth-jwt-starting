@@ -1,7 +1,7 @@
-import { UserPresenter } from '../../user/presenter';
-import { CreateUserDto } from '../../user/dto';
+import { CreateUserDto } from 'src/modules/user/dto';
 import { LoginDto } from '../dto';
 import { LoginPresenter } from '../presenter';
+import { UserPresenter } from 'src/modules/user/presenter';
 
 /**
  * @description Auth Service Token

@@ -5,8 +5,8 @@ import {
   Logger,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { ROLES_KEY } from '../decorators';
 import { RoleEnum } from '../enums';
+import { ROLES_KEY } from '../decorators';
 import { RequestWithUser } from '../interfaces';
 
 @Injectable()

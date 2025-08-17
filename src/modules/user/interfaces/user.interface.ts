@@ -1,6 +1,6 @@
-import { PaginationPresenter } from '../../../common/base';
-import { User } from '../entities';
+import { PaginationPresenter } from 'src/common/base';
 import { CreateUserDto, FilterUserDto, UpdateUserDto } from '../dto';
+import { User } from '../entities';
 import { UserPresenter } from '../presenter';
 
 export const UserRepoToken = Symbol('UserRepoToken');

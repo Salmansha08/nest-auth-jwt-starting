@@ -1,6 +1,6 @@
 import { ConfigService, registerAs } from '@nestjs/config';
-import { DatabaseConfig } from '../interfaces';
 import * as dotenv from 'dotenv';
+import { DatabaseConfig } from '../interfaces';
 
 dotenv.config();
 

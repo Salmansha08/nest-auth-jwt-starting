@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Brackets, Repository } from 'typeorm';
-import { PaginationPresenter } from '../../../common/base';
-import { SortOrderEnum } from '../../../common/enums';
+import { IUserRepo } from '../interfaces';
 import { User } from '../entities';
 import { CreateUserDto, FilterUserDto, UpdateUserDto } from '../dto';
-import { IUserRepo } from '../interfaces';
+import { PaginationPresenter } from 'src/common/base';
+import { SortOrderEnum } from 'src/common/enums';
 
 @Injectable()
 export class UserRepo implements IUserRepo {

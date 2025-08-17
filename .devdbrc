@@ -8,5 +8,14 @@
     "password": "password",
     "database": "auth_app",
     "schema": "public"
+  },
+  {
+    "name": "AuthApp-Prod",
+    "type": "postgres",
+    "host": "db.unrprxfkbdbqxapjters.supabase.co",
+    "port": 5432,
+    "username": "postgres",
+    "password": "4jTzVRVLd78pQ3vQ",
+    "database": "postgres"
   }
 ]

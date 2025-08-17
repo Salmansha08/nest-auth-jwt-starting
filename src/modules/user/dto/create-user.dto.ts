@@ -8,7 +8,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { RoleEnum } from '../../../common/enums';
+import { RoleEnum } from 'src/common/enums';
 
 export class CreateUserDto {
   @ApiProperty({

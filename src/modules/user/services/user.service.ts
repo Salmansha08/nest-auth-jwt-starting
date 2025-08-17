@@ -11,11 +11,11 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 import { plainToInstance } from 'class-transformer';
 import * as bcrypt from 'bcrypt';
-import { PaginationPresenter } from '../../../common/base';
-import { RoleEnum } from '../../../common/enums';
-import { CreateUserDto, FilterUserDto, UpdateUserDto } from '../dto';
 import { IUserRepo, IUserService, UserRepoToken } from '../interfaces';
+import { CreateUserDto, FilterUserDto, UpdateUserDto } from '../dto';
 import { UserPresenter } from '../presenter';
+import { RoleEnum } from 'src/common/enums';
+import { PaginationPresenter } from 'src/common/base';
 
 @Injectable()
 export class UserService implements IUserService {

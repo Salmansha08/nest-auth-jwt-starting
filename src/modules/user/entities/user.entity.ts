@@ -1,5 +1,5 @@
-import { BaseEntity } from '../../../common/base';
-import { RoleEnum } from '../../../common/enums';
+import { BaseEntity } from 'src/common/base';
+import { RoleEnum } from 'src/common/enums';
 import { Column, Entity } from 'typeorm';
 
 @Entity()
