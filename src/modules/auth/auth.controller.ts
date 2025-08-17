@@ -10,15 +10,15 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ThrottlerGuard } from '@nestjs/throttler';
-import { BaseController } from 'src/common/base';
+import { BaseController } from '../../common/base';
 import { AuthServiceToken, IAuthService } from './interfaces';
-import { ApiDoc } from 'src/common/decorators';
-import { ResponseEnum } from 'src/common/enums';
+import { ApiDoc } from '../../common/decorators';
+import { ResponseEnum } from '../../common/enums';
 import { LoginPresenter } from './presenter';
 import { LoginDto, RegisterDto } from './dto';
 import { UserPresenter } from '../user/presenter';
-import { JwtAuthGuard } from 'src/common/guards';
-import { RequestWithUser } from 'src/common/interfaces';
+import { JwtAuthGuard } from '../../common/guards';
+import { RequestWithUser } from '../../common/interfaces';
 
 @Controller('auth')
 @ApiTags('Auth')

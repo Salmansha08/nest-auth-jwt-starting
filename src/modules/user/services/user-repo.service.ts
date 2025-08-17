@@ -4,7 +4,7 @@ import { Brackets, Repository } from 'typeorm';
 import { IUserRepo } from '../interfaces';
 import { User } from '../entities';
 import { CreateUserDto, FilterUserDto, UpdateUserDto } from '../dto';
-import { PaginationPresenter } from 'src/common/base';
+import { PaginationPresenter } from '../../../common/base';
 import { SortOrderEnum } from 'src/common/enums';
 
 @Injectable()

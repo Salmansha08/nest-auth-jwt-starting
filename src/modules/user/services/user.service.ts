@@ -15,7 +15,7 @@ import { IUserRepo, IUserService, UserRepoToken } from '../interfaces';
 import { CreateUserDto, FilterUserDto, UpdateUserDto } from '../dto';
 import { UserPresenter } from '../presenter';
 import { RoleEnum } from 'src/common/enums';
-import { PaginationPresenter } from 'src/common/base';
+import { PaginationPresenter } from '../../../common/base';
 
 @Injectable()
 export class UserService implements IUserService {
