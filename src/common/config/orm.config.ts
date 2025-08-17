@@ -7,6 +7,8 @@ dotenv.config();
 const configService = new ConfigService();
 export const appDataSource = new DataSource({
   type: 'postgres',
+  ssl: true, // True if use ssl
+  url: configService.get('DATABASE_URL') ?? '',
   host: configService.get('DATABASE_HOST') ?? 'localhost',
   port: Number(configService.get('DATABASE_PORT') ?? 5432),
   username: configService.get('DATABASE_USERNAME') ?? 'postgres',

@@ -1,14 +1,15 @@
 import { plainToClass, Transform } from 'class-transformer';
-import { IsEnum, IsNumber, IsString, validateSync } from 'class-validator';
+import { IsEnum, IsNumber, IsOptional, IsString, validateSync } from 'class-validator';
 import { NodeEnvEnum } from '../enums';
 
 class EnvironmentVariables {
   @IsEnum(NodeEnvEnum)
   NODE_ENV: NodeEnvEnum;
 
+  @IsOptional()
   @IsNumber()
   @Transform(({ value }) => Number(value))
-  PORT: number;
+  PORT?: number;
 
   @IsString()
   JWT_SECRET!: string;
