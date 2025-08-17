@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
 import { BaseIdPresenter } from '../../../common/base';
+import { RoleEnum } from '../../../common/enums';
 
 @Exclude()
 export class UserPresenter extends BaseIdPresenter {
@@ -12,7 +13,7 @@ export class UserPresenter extends BaseIdPresenter {
   @Expose()
   email: string;
 
-  @ApiProperty()
+  @ApiProperty({ enum: RoleEnum, enumName: 'RoleEnum' })
   @Expose()
-  role: string;
+  role: RoleEnum;
 }
