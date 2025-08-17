@@ -1,21 +1,33 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "version": 2,
-  "crons": [],
-  "framework": null,
-  "devCommand": "bun run start:dev",
-  "installCommand": "bun install",
+  "cleanUrls": true,
   "buildCommand": "bun run build",
-  "outputDirectory": "dist",
+  "devCommand": "bun run start:dev",
+  "framework": null,
   "functions": {
-    "src/main.ts": {
-      "runtime": "nodejs22.x"
+    "src/*.ts": {
+      "runtime": "nodejs",
+      "memory": 3009,
+      "maxDuration": 60
     }
   },
+  "installCommand": "bun install",
+  "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/api/docs",
+      "permanent": false
+    }
+  ],
+  "regions": [
+    "sin1"
+  ],
   "rewrites": [
     {
       "source": "/(.*)",
       "destination": "/src/main.ts"
     }
-  ]
+  ],
+  "trailingSlash": false
 }
