@@ -1,17 +1,18 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
-  "rewrites": [
+  "routes": [
     {
-      "source": "/(.*)",
-      "destination": "/dist/main.js"
+      "src": "/(.*)",
+      "dest": "/dist/main.js"
     }
   ],
-  "functions": {
-    "api/**/*.{js,ts}": {
-      "runtime": "bun@latest"
+  "builds": [
+    {
+      "src": "dist/main.js",
+      "use": "@vercel/node"
     }
-  },
+  ],
   "framework": null,
   "cleanUrls": true,
   "devCommand": "bun run start:dev",
