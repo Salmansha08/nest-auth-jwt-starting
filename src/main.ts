@@ -43,9 +43,7 @@ async function bootstrap() {
     }),
   );
 
-  if (appEnvironment !== NodeEnvEnum.PRODUCTION) {
-    setupSwagger(app);
-  }
+  setupSwagger(app);
 
   if (appEnvironment === NodeEnvEnum.LOCAL) {
     await handleLocalEnvironment(app, basePort);
