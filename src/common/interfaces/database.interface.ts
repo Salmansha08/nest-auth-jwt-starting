@@ -11,3 +11,12 @@ export interface DatabaseConfig {
   migrations: string[];
   synchronize: boolean;
 }
+
+export interface DatabaseURLConfig {
+  url: string;
+  logging: boolean;
+  entities: string[];
+  autoLoadEntities: boolean;
+  migrations: string[];
+  synchronize: boolean;
+}
