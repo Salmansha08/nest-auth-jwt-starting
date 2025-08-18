@@ -23,6 +23,7 @@ async function bootstrap(): Promise<Server | void> {
   const basePort = configService.get<number>('PORT') ?? 3000;
   const environment = configService.get<string>('NODE_ENV') || 'local';
   const apiPrefix = configService.get<string>('API_PREFIX') || 'api';
+  const swaggerPath = configService.get<string>('SWAGGER_PATH') || 'api/docs';
   const isVercel = configService.get<string>('VERCEL') === 'false';
 
   const appEnvironment = Object.values(NodeEnvEnum).includes(
@@ -59,13 +60,13 @@ async function bootstrap(): Promise<Server | void> {
     await handleLocalEnvironment(app, basePort);
   } else {
     await app.listen(basePort);
-    console.log(
-      `Application is running on port: http://localhost:${basePort} in ${environment} environment`,
-    );
-    console.log(
-      `Swagger documentation: http://localhost:${basePort}/${process.env.SWAGGER_PATH || 'api/docs'}`,
-    );
   }
+  console.log(
+    `Application is running on port: http://localhost:${basePort} in ${environment} environment`,
+  );
+  console.log(
+    `Swagger documentation: http://localhost:${basePort}/${swaggerPath}`,
+  );
 }
 bootstrap().catch((err) => {
   console.error('Failed to start application:', err);
