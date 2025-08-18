@@ -35,7 +35,6 @@ export class UserController extends BaseController {
 
   @Post()
   @UseGuards(RolesGuard)
-  @Roles(RoleEnum.SUPERADMIN, RoleEnum.ADMIN)
   @ApiDoc(
     {
       summary: 'Create User',
