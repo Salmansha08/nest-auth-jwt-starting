@@ -1,5 +1,11 @@
 import { plainToClass, Transform } from 'class-transformer';
-import { IsEnum, IsNumber, IsOptional, IsString, validateSync } from 'class-validator';
+import {
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsString,
+  validateSync,
+} from 'class-validator';
 import { NodeEnvEnum } from '../enums';
 
 class EnvironmentVariables {
