@@ -14,7 +14,7 @@ import { BaseController } from '../../common/base';
 import { AuthServiceToken, IAuthService } from './interfaces';
 import { ApiDoc } from '../../common/decorators';
 import { ResponseEnum } from '../../common/enums';
-import { LoginPresenter } from './presenter';
+import { LoginPresenter, MePresenter } from './presenter';
 import { LoginDto, RegisterDto } from './dto';
 import { UserPresenter } from '../user/presenter';
 import { JwtAuthGuard } from '../../common/guards';
@@ -76,14 +76,14 @@ export class AuthController extends BaseController {
       status: HttpStatus.OK,
       responseType: ResponseEnum.OBJECT,
     },
-    UserPresenter,
+    MePresenter,
   )
   getCurrentUser(@Req() req: RequestWithUser) {
     if (!req.user) {
       return this.unauthorized('User not found');
     }
 
-    const transformedData = this.transformObject(UserPresenter, req.user);
+    const transformedData = this.transformObject(MePresenter, req.user);
 
     return this.findSuccess(
       transformedData,
