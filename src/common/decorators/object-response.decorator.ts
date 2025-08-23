@@ -37,7 +37,7 @@ export const ApiObjectResponse = <
       type: 'number',
       default: options.status,
     },
-    date: {
+    timestamp: {
       type: 'string',
       default: new Date().toISOString(),
     },

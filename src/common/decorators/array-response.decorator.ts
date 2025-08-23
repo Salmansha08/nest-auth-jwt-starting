@@ -27,7 +27,7 @@ export const ApiArrayResponse = <DataDto extends Type<unknown>>(
             type: 'number',
             default: options.status,
           },
-          date: {
+          timestamp: {
             type: 'string',
             default: new Date().toISOString(),
           },

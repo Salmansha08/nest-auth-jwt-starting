@@ -21,7 +21,7 @@ export function ApiErrorDecorator(
           type: 'number',
           default: item.statusCode,
         },
-        date: {
+        timestamp: {
           type: 'date',
           default: new Date(),
         },
@@ -45,7 +45,7 @@ export function ApiErrorDecorator(
           type: 'number',
           default: args.statusCode,
         },
-        date: {
+        timestamp: {
           type: 'date',
           default: new Date(),
         },
