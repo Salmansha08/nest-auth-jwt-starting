@@ -1,7 +1,7 @@
-Write-Host "🚀 Menjalankan ESLint..."
+Write-Host "🚀 Run ESLint..."
 bun run lint-staged
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "❌ ESLint gagal! Mohon perbaiki error dan warning terlebih dahulu."
+    Write-Host "❌ ESLint failed! Please fix the errors and warnings first."
     exit 1
 }
-Write-Host "✅ Pre-commit hook selesai dengan sukses"
+Write-Host "✅ Pre-commit hook completed successfully"
