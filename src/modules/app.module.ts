@@ -1,4 +1,3 @@
-import { CacheModule } from '@nestjs/cache-manager';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
@@ -32,15 +31,6 @@ import { AuthModule } from './auth/auth.module';
           ...dbConfig,
         };
       },
-    }),
-    CacheModule.registerAsync({
-      isGlobal: true,
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
-        ttl: config.get('CACHE_TTL', 60),
-        max: config.get('CACHE_MAX_ITEMS', 100),
-      }),
     }),
     ThrottlerModule.forRoot({
       throttlers: [{ ttl: 60, limit: 10 }],
