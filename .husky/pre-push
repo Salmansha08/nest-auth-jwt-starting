@@ -4,11 +4,12 @@ OS="$(uname -s | tr '[:upper:]' '[:lower:]')"
 if echo "$OS" | grep -q "mingw"; then
   # Windows (Git Bash)
   echo "🔍 Detected Windows (Git Bash). Running PowerShell script..."
-  powershell.exe -ExecutionPolicy Bypass -NoProfile -File .husky/pre-commit.ps1
+  powershell.exe -ExecutionPolicy Bypass -NoProfile -File .husky/pre-push.ps1 "$1"
+  bun run lint-staged
 else
   # Linux/Mac
   echo "🔍 Detected Linux/Mac. Running shell script..."
-  echo "🧹 Run lint-staged..."
-  bun run lint-staged || (echo "❌ ESLint failed! Please fix errors and warnings first." && exit 1)
-  echo "✅ ESLint OK. Proceeding to commit."
+  echo "🏗️ Run build before push..."
+  bun run build || (echo "❌ Build failed! Push aborted." && exit 1)
+  echo "✅ Build OK. Proceeding to push."
 fi

@@ -1,4 +1,4 @@
-# Deteksi sistem operasi
+# Operating System Detection
 OS="$(uname -s | tr '[:upper:]' '[:lower:]')"
 
 if echo "$OS" | grep -q "mingw"; then
@@ -8,8 +8,10 @@ if echo "$OS" | grep -q "mingw"; then
 else
   # Linux/Mac
   echo "🔍 Detected Linux/Mac. Running shell script..."
+  echo "📝 Run commitlint..."
   bun commitlint --edit "$1" || (
     echo "❌ Commit message invalid. Please fix."
     exit 1
   )
+  echo "✅ Commit message valid according to Conventional Commit"
 fi
