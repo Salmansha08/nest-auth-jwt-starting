@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
 
 @Exclude()
@@ -44,11 +44,18 @@ export class MetaPresenter {
 
 @Exclude()
 export class PaginationPresenter<T> {
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Array of entities',
+    type: 'array',
+  })
   @Expose()
   entities: T[];
 
-  @ApiProperty()
+  @ApiPropertyOptional({
+    description: 'Pagination meta data (null if pagination is disabled)',
+    type: MetaPresenter,
+    nullable: true,
+  })
   @Expose()
-  meta: MetaPresenter;
+  meta: MetaPresenter | null;
 }

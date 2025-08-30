@@ -34,16 +34,20 @@ export class UserRepo implements IUserRepo {
       );
     }
 
-    let limit = 10;
-    let page = 1;
+    if (!query.isPagination) {
+      const entities = await queryBuilder.getMany();
 
-    if (query.isPagination) {
-      limit = query.limit && query.limit > 0 ? query.limit : 10;
-      page = query.page && query.page >= 1 ? query.page : 1;
-      const skip = (page - 1) * limit;
-
-      queryBuilder.skip(skip).take(limit);
+      return {
+        entities,
+        meta: null,
+      };
     }
+
+    const limit = query.limit && query.limit > 0 ? query.limit : 10;
+    const page = query.page && query.page >= 1 ? query.page : 1;
+    const skip = (page - 1) * limit;
+
+    queryBuilder.skip(skip).take(limit);
 
     const [entities, totalItems] = await queryBuilder.getManyAndCount();
 

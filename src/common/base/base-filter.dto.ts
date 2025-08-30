@@ -8,6 +8,7 @@ import {
   Min,
   Max,
   IsEnum,
+  ValidateIf,
 } from 'class-validator';
 import { SortOrderEnum } from '../enums';
 
@@ -21,7 +22,7 @@ export class BaseFilterDto {
 
   @ApiPropertyOptional({
     description: 'Enable pagination (true/false)',
-    default: false,
+    default: true,
   })
   @IsOptional()
   @IsBoolean()
@@ -33,10 +34,12 @@ export class BaseFilterDto {
   isPagination?: boolean = false;
 
   @ApiPropertyOptional({
-    description: 'Current page (starts at 1)',
+    description:
+      'Current page (starts at 1, only used when isPagination is true)',
     type: 'number',
     example: 1,
   })
+  @ValidateIf((o: BaseFilterDto) => o.isPagination === true)
   @IsOptional()
   @IsInt()
   @Type(() => Number)
@@ -44,10 +47,12 @@ export class BaseFilterDto {
   page?: number = 1;
 
   @ApiPropertyOptional({
-    description: 'Items per page (max 100)',
+    description:
+      'Items per page (max 100, only used when isPagination is true)',
     type: 'number',
     example: 10,
   })
+  @ValidateIf((o: BaseFilterDto) => o.isPagination === true)
   @IsOptional()
   @Type(() => Number)
   @IsInt()
