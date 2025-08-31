@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
   HttpStatus,
   Inject,
   Post,
@@ -31,6 +32,7 @@ export class AuthController extends BaseController {
   }
 
   @Post('login')
+  @HttpCode(HttpStatus.OK)
   @UseGuards(ThrottlerGuard)
   @ApiDoc(
     {
