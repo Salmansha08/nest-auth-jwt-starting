@@ -18,5 +18,5 @@ export const appDataSource = new DataSource({
   synchronize: true,
   logging: (configService.get('DATABASE_LOGGING') ?? 'false') === 'true',
   entities: [__dirname + '/../../modules/**/*.entity{.ts,.js}'],
-  migrations: [__dirname + '/../../database/migrations/*{.ts,.js}'],
+  migrations: [__dirname + '/../../migrations/*{.ts,.js}'],
 });
