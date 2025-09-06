@@ -11,13 +11,17 @@ import {
   Query,
   ParseUUIDPipe,
   UseGuards,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { BaseController } from '../../common/base';
 import { JwtAuthGuard, RolesGuard } from '../../common/guards';
-import { IUserService, UserServiceToken } from './interfaces';
+import { AuthUserInterface } from '../../common/interfaces';
+import { FileUploadInterceptor } from '../../common/interceptors';
 import { ResponseEnum, RoleEnum } from '../../common/enums';
-import { ApiDoc, Roles } from '../../common/decorators';
+import { ApiDoc, AuthUser, Roles } from '../../common/decorators';
+import { IUserService, UserServiceToken } from './interfaces';
 import { UserPresenter } from './presenter';
 import { CreateUserDto, FilterUserDto, UpdateUserDto } from './dto';
 
@@ -76,6 +80,32 @@ export class UserController extends BaseController {
         entities: transformedEntities,
       },
       'Users retrieved successfully',
+    );
+  }
+
+  @Patch('/photo')
+  @UseGuards(RolesGuard)
+  @UseInterceptors(FileUploadInterceptor)
+  @ApiDoc(
+    {
+      summary: 'Upload/Replace Photo',
+      description: 'Update/Replace User Photo',
+      status: HttpStatus.OK,
+      responseType: ResponseEnum.OBJECT,
+      isFileUpload: true,
+    },
+    UserPresenter,
+  )
+  async updatePhoto(
+    @AuthUser() user: AuthUserInterface,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    const updatedUser = await this._userService.updatePhoto(user.id, file);
+    const transformedUser = this.transformObject(UserPresenter, updatedUser);
+
+    return this.updateSuccess(
+      transformedUser,
+      'User photo updated successfully',
     );
   }
 

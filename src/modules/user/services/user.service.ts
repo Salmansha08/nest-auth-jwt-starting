@@ -7,12 +7,14 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import * as bcrypt from 'bcrypt';
+import { compare, genSalt, hash } from 'bcrypt';
+import { unlinkSync } from 'fs';
 import { IUserRepo, IUserService, UserRepoToken } from '../interfaces';
 import { CreateUserDto, FilterUserDto, UpdateUserDto } from '../dto';
 import { UserPresenter } from '../presenter';
-import { RoleEnum } from 'src/common/enums';
+import { RoleEnum } from '../../../common/enums';
 import { PaginationPresenter } from '../../../common/base';
+import { UpdatePhotoDto } from '../dto/update-photo.dto';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -37,7 +39,7 @@ export class UserService implements IUserService {
 
   private async initSalt(rounds: number): Promise<void> {
     try {
-      this.salt = await bcrypt.genSalt(rounds);
+      this.salt = await genSalt(rounds);
     } catch (error) {
       this.logger.error('Failed to generate salt:', error);
       this.salt = '10';
@@ -110,10 +112,7 @@ export class UserService implements IUserService {
         throw new BadRequestException(`Old password is required`);
       }
 
-      const isMatch = await bcrypt.compare(
-        updateUserDto.oldPassword,
-        user.password,
-      );
+      const isMatch = await compare(updateUserDto.oldPassword, user.password);
       if (!isMatch) {
         throw new BadRequestException(`Passwords do not match`);
       }
@@ -146,8 +145,43 @@ export class UserService implements IUserService {
     if (!this.salt) {
       throw new Error('Salt has not been initialized');
     }
-    const hashedPassword = await bcrypt.hash(password, this.salt);
+    const hashedPassword = await hash(password, this.salt);
 
     return hashedPassword;
+  }
+
+  async updatePhoto(
+    id: string,
+    file?: Express.Multer.File,
+  ): Promise<UserPresenter> {
+    const user = await this._userRepo.findOne(id);
+    if (!user) {
+      throw new NotFoundException(`User with id ${id} not found`);
+    }
+
+    const oldPhoto = user.photo;
+
+    let updatedUserDto: UpdatePhotoDto;
+    if (file) {
+      const photo = `/uploads/${file.filename}`;
+      updatedUserDto = { photo };
+    } else {
+      updatedUserDto = { photo: '' };
+    }
+
+    const updatedUser = await this._userRepo.updatePhoto(id, updatedUserDto);
+
+    if (oldPhoto !== '' && oldPhoto !== null) {
+      try {
+        const oldPhotoPath = `.${oldPhoto}`;
+        unlinkSync(oldPhotoPath);
+      } catch (error: unknown) {
+        const message =
+          error instanceof Error ? error.message : 'Unknown error';
+        this.logger.error(`Failed to delete old photo: ${message}`);
+      }
+    }
+
+    return updatedUser;
   }
 }

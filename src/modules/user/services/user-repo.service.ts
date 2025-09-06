@@ -5,7 +5,8 @@ import { IUserRepo } from '../interfaces';
 import { User } from '../entities';
 import { CreateUserDto, FilterUserDto, UpdateUserDto } from '../dto';
 import { PaginationPresenter } from '../../../common/base';
-import { SortOrderEnum } from 'src/common/enums';
+import { SortOrderEnum } from '../../../common/enums';
+import { UpdatePhotoDto } from '../dto/update-photo.dto';
 
 @Injectable()
 export class UserRepo implements IUserRepo {
@@ -96,5 +97,14 @@ export class UserRepo implements IUserRepo {
     const user = await queryBuilder.getOne();
 
     return user;
+  }
+
+  async updatePhoto(id: string, dto: UpdatePhotoDto): Promise<User> {
+    const user = await this.findOne(id);
+
+    return this.userRepository.save({
+      ...user,
+      ...dto,
+    });
   }
 }

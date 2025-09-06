@@ -1,5 +1,6 @@
 import { PaginationPresenter } from '../../../common/base';
 import { CreateUserDto, FilterUserDto, UpdateUserDto } from '../dto';
+import { UpdatePhotoDto } from '../dto/update-photo.dto';
 import { User } from '../entities';
 import { UserPresenter } from '../presenter';
 
@@ -17,6 +18,8 @@ export interface IUserRepo {
   remove(id: string): Promise<void>;
 
   findOneByEmail(email: string): Promise<User | null>;
+
+  updatePhoto(id: string, dto: UpdatePhotoDto): Promise<User>;
 }
 
 export const UserServiceToken = Symbol('UserServiceToken');
@@ -35,4 +38,6 @@ export interface IUserService {
   findOneByEmail(email: string): Promise<UserPresenter | null>;
 
   hashPassword(password: string): Promise<string>;
+
+  updatePhoto(id: string, file: Express.Multer.File): Promise<UserPresenter>;
 }
