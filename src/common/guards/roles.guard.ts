@@ -5,6 +5,7 @@ import {
   Logger,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { Request } from 'express';
 import { RoleEnum } from '../enums';
 import { ROLES_KEY } from '../decorators';
 import { AuthUserInterface } from '../interfaces';
@@ -25,7 +26,8 @@ export class RolesGuard implements CanActivate {
       return true;
     }
 
-    const user = context.switchToHttp().getRequest<AuthUserInterface>();
+    const request = context.switchToHttp().getRequest<Request>();
+    const user = request.user as AuthUserInterface;
 
     if (!user.id) {
       this.logger.warn('Access denied - No user found in request');
