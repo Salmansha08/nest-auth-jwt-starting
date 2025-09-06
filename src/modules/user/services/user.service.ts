@@ -15,6 +15,7 @@ import { UserPresenter } from '../presenter';
 import { RoleEnum } from '../../../common/enums';
 import { PaginationPresenter } from '../../../common/base';
 import { UpdatePhotoDto } from '../dto/update-photo.dto';
+import { UpdateProfileDto } from '../dto/update-profile.dto';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -181,6 +182,21 @@ export class UserService implements IUserService {
         this.logger.error(`Failed to delete old photo: ${message}`);
       }
     }
+
+    return updatedUser;
+  }
+
+  async updateProfile(
+    id: string,
+    dto: UpdateProfileDto,
+  ): Promise<UserPresenter> {
+    const user = await this._userRepo.findOne(id);
+    if (!user) {
+      throw new NotFoundException(`User with id ${id} not found`);
+    }
+
+    const updatedUserDto = { ...user, ...dto };
+    const updatedUser = await this._userRepo.update(id, updatedUserDto);
 
     return updatedUser;
   }

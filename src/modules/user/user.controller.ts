@@ -24,6 +24,7 @@ import { ApiDoc, AuthUser, Roles } from '../../common/decorators';
 import { IUserService, UserServiceToken } from './interfaces';
 import { UserPresenter } from './presenter';
 import { CreateUserDto, FilterUserDto, UpdateUserDto } from './dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 
 @Controller('user')
 @ApiTags('User')
@@ -84,7 +85,6 @@ export class UserController extends BaseController {
   }
 
   @Patch('/photo')
-  @UseGuards(RolesGuard)
   @UseInterceptors(FileUploadInterceptor)
   @ApiDoc(
     {
@@ -106,6 +106,30 @@ export class UserController extends BaseController {
     return this.updateSuccess(
       transformedUser,
       'User photo updated successfully',
+    );
+  }
+
+  @Patch('/profile')
+  @UseInterceptors(FileUploadInterceptor)
+  @ApiDoc(
+    {
+      summary: 'Update User Profile',
+      description: 'Update User Profile',
+      status: HttpStatus.OK,
+      responseType: ResponseEnum.OBJECT,
+    },
+    UserPresenter,
+  )
+  async updateProfile(
+    @AuthUser() user: AuthUserInterface,
+    @Body() dto: UpdateProfileDto,
+  ) {
+    const updatedUser = await this._userService.updateProfile(user.id, dto);
+    const transformedUser = this.transformObject(UserPresenter, updatedUser);
+
+    return this.updateSuccess(
+      transformedUser,
+      'User profile updated successfully',
     );
   }
 

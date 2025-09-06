@@ -1,6 +1,7 @@
 import { PaginationPresenter } from '../../../common/base';
 import { CreateUserDto, FilterUserDto, UpdateUserDto } from '../dto';
 import { UpdatePhotoDto } from '../dto/update-photo.dto';
+import { UpdateProfileDto } from '../dto/update-profile.dto';
 import { User } from '../entities';
 import { UserPresenter } from '../presenter';
 
@@ -40,4 +41,6 @@ export interface IUserService {
   hashPassword(password: string): Promise<string>;
 
   updatePhoto(id: string, file: Express.Multer.File): Promise<UserPresenter>;
+
+  updateProfile(id: string, dto: UpdateProfileDto): Promise<UserPresenter>;
 }
