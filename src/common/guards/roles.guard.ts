@@ -7,7 +7,7 @@ import {
 import { Reflector } from '@nestjs/core';
 import { RoleEnum } from '../enums';
 import { ROLES_KEY } from '../decorators';
-import { RequestWithUser } from '../interfaces';
+import { AuthUserInterface } from '../interfaces';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -25,14 +25,12 @@ export class RolesGuard implements CanActivate {
       return true;
     }
 
-    const request = context.switchToHttp().getRequest<RequestWithUser>();
+    const user = context.switchToHttp().getRequest<AuthUserInterface>();
 
-    if (!request.user) {
+    if (!user.id) {
       this.logger.warn('Access denied - No user found in request');
       return false;
     }
-
-    const user = request.user;
 
     if (!user.role && (!user.roles || user.roles.length === 0)) {
       this.logger.warn(

@@ -6,20 +6,19 @@ import {
   HttpStatus,
   Inject,
   Post,
-  Req,
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ThrottlerGuard } from '@nestjs/throttler';
 import { BaseController } from '../../common/base';
 import { AuthServiceToken, IAuthService } from './interfaces';
-import { ApiDoc } from '../../common/decorators';
+import { ApiDoc, AuthUser } from '../../common/decorators';
 import { ResponseEnum } from '../../common/enums';
 import { LoginPresenter, MePresenter } from './presenter';
 import { LoginDto, RegisterDto } from './dto';
 import { UserPresenter } from '../user/presenter';
 import { JwtAuthGuard } from '../../common/guards';
-import { RequestWithUser } from '../../common/interfaces';
+import { AuthUserInterface } from '../../common/interfaces';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -80,12 +79,8 @@ export class AuthController extends BaseController {
     },
     MePresenter,
   )
-  getCurrentUser(@Req() req: RequestWithUser) {
-    if (!req.user) {
-      return this.unauthorized('User not found');
-    }
-
-    const transformedData = this.transformObject(MePresenter, req.user);
+  getCurrentUser(@AuthUser() user: AuthUserInterface) {
+    const transformedData = this.transformObject(MePresenter, user);
 
     return this.findSuccess(
       transformedData,
