@@ -1,5 +1,5 @@
 import { Type, UseInterceptors, applyDecorators } from '@nestjs/common';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiOperation } from '@nestjs/swagger';
 import { ResponseEnum } from '../enums';
 import { ApiObjectResponse } from './object-response.decorator';
 import { PaginationInterceptor, TransformInterceptor } from '../interceptors';
@@ -12,6 +12,7 @@ export const ApiDoc = (
     description?: string;
     status?: number;
     responseType: ResponseEnum;
+    isFileUpload?: boolean;
   },
   dataDto?: Type<unknown>,
 ) => {
@@ -21,6 +22,23 @@ export const ApiDoc = (
       description: options.description || options.summary,
     }),
   ];
+
+  if (options.isFileUpload) {
+    decorators.push(
+      ApiConsumes('multipart/form-data'),
+      ApiBody({
+        schema: {
+          type: 'object',
+          properties: {
+            file: {
+              type: 'string',
+              format: 'binary',
+            },
+          },
+        },
+      }),
+    );
+  }
 
   switch (options.responseType) {
     case ResponseEnum.OBJECT:
