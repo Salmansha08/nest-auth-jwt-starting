@@ -3,12 +3,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { MulterModule } from '@nestjs/platform-express';
 import {
   appConfig,
   databaseConfig,
+  multerConfig,
   validateEnvironment,
 } from 'src/common/config';
-import { DatabaseConfig } from 'src/common/interfaces';
+import { DatabaseConfig } from '../common/interfaces';
 import { HealthModule } from './health/health.module';
 import { UsersModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
@@ -35,6 +37,10 @@ import { AuthModule } from './auth/auth.module';
     ThrottlerModule.forRoot({
       throttlers: [{ ttl: 60, limit: 10 }],
     }),
+    MulterModule.register({
+      storage: multerConfig.storage,
+      fileFilter: multerConfig.fileFilter,
+    }),
     HealthModule,
     UsersModule,
     AuthModule,
@@ -46,5 +52,6 @@ import { AuthModule } from './auth/auth.module';
       useClass: ThrottlerGuard,
     },
   ],
+  exports: [MulterModule],
 })
 export class AppModule {}
